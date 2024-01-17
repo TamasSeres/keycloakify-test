@@ -27,7 +27,9 @@
   "license": "MIT",
   "keywords": [],
   "dependencies": {
+    "@nextui-org/react": "^2.2.9",
     "evt": "^2.4.15",
+    "framer-motion": "^10.18.0",
     "keycloakify": "^9.1.4",
     "oidc-spa": "^2.2.0",
     "powerhooks": "^0.26.8",
