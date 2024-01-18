@@ -80,7 +80,9 @@ export default function Login(
           className="bg-white px-12 pb-5 rounded-sm shadow-xl w-[35%]"
           method="post"
         >
-          <h1 className="text-center py-5 text-2xl text-blue-600">Login</h1>
+          <h1 className="text-center py-5 text-2xl text-blue-600">
+            {msg("doLogIn")}
+          </h1>
           <div>
             {!usernameHidden &&
               (() => {
@@ -101,7 +103,7 @@ export default function Login(
                       defaultValue={login.username ?? ""}
                       type="text"
                       autoFocus={true}
-                      label="Username"
+                      label={msg(label)}
                       size="sm"
                       className="pb-4"
                       variant="underlined"
@@ -117,7 +119,7 @@ export default function Login(
                 id="password"
                 name="password"
                 type="password"
-                label="Password"
+                label={msg("password")}
                 size="sm"
                 variant="underlined"
                 autoComplete="off"
@@ -132,9 +134,13 @@ export default function Login(
                     id="rememberMe"
                     size="md"
                     name="rememberMe"
-                    checked={true}
+                    {...(login.rememberMe === "on"
+                      ? {
+                          checked: true,
+                        }
+                      : {})}
                   >
-                    Remember me
+                    {msg("rememberMe")}
                   </Checkbox>
                 </div>
               )}

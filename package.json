@@ -16,7 +16,7 @@
   },
   "keycloakify": {
     "themeName": [
-      "srs-keycloak-theme",
+      "ibee-keycloak-theme",
       "keycloakify-starter-variant-1"
     ],
     "extraThemeProperties": [
