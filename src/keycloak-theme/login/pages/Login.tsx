@@ -9,6 +9,8 @@ import { Input } from "@nextui-org/react";
 import { Checkbox } from "@nextui-org/react";
 import { Link } from "@nextui-org/react";
 import type { I18n } from "../i18n";
+import { Card, CardBody } from "@nextui-org/react";
+import CircleExclamation from "../assets/CircleExclamation";
 
 const my_custom_param = new URL(window.location.href).searchParams.get(
   "my_custom_param"
@@ -77,12 +79,22 @@ export default function Login(
           id="kc-form-login"
           onSubmit={onSubmit}
           action={url.loginAction}
-          className="bg-white px-12 pb-5 rounded-sm shadow-xl w-[35%]"
+          className="bg-white px-12 pb-5 rounded-lg shadow-xl w-[35%]"
           method="post"
         >
           <h1 className="text-center py-5 text-2xl text-blue-600">
             {msg("doLogIn")}
           </h1>
+          {kcContext.message !== undefined &&
+            (kcContext.message.type !== "warning" ||
+              !kcContext.isAppInitiatedAction) && (
+              <Card shadow="sm" className="bg-red-400 mb-4">
+                <CardBody className="flex flex-row gap-2 items-center">
+                  <CircleExclamation className="text-red-600" />
+                  {kcContext.message.summary}
+                </CardBody>
+              </Card>
+            )}
           <div>
             {!usernameHidden &&
               (() => {
@@ -181,7 +193,9 @@ export default function Login(
               <div id="kc-registration" className="text-center pt-2">
                 <span>
                   {msg("noAccount")}
-                  <Link href={url.registrationUrl}>{msg("doRegister")}</Link>
+                  <Link className="ml-1" href={url.registrationUrl}>
+                    {msg("doRegister")}
+                  </Link>
                 </span>
               </div>
             )}

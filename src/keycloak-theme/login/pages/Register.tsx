@@ -4,9 +4,11 @@ import type { PageProps } from "keycloakify/login/pages/PageProps";
 import { useGetClassName } from "keycloakify/login/lib/useGetClassName";
 import type { KcContext } from "../kcContext";
 import type { I18n } from "../i18n";
-import "../../../index.css";
+import { Input } from "@nextui-org/react";
+import { Button } from "@nextui-org/react";
+import { Link } from "@nextui-org/react";
 
-export default function Register(
+export default function RegisterOriginal(
   props: PageProps<Extract<KcContext, { pageId: "register.ftl" }>, I18n>
 ) {
   const { kcContext, i18n, doUseDefaultCss, Template, classes } = props;
@@ -29,106 +31,89 @@ export default function Register(
   const { msg, msgStr } = i18n;
 
   return (
-    <div className="w-screen h-screen bg-gradient-to-r from-cyan-500 to-blue-500 flex justify-center items-center">
+    <div
+      id="kc-form-wrapper"
+      className="flex w-screen h-screen items-center justify-center bg-gradient-to-r from-cyan-500 to-blue-500"
+    >
       <form
         id="kc-register-form"
+        className="bg-white px-12 pb-5 rounded-sm shadow-xl w-[35%]"
         action={url.registrationAction}
         method="post"
-        className="border rounded-md p-4 bg-white shadow-md w-[30%]"
       >
-        <div className="font-medium text-2xl text-center mb-4">Register</div>
-        <div id="firstName-wrapper" className="mb-4">
-          <div>
-            <label htmlFor="firstName">First name</label>
-            <div>
-              <input
-                type="text"
-                id="firstName"
-                name="firstName"
-                className="border rounded-sm w-full px-1"
-                defaultValue={register.formData.firstName ?? ""}
-              />
-            </div>
-          </div>
-        </div>
+        <h1 className="text-center py-5 text-2xl text-blue-600">
+          {msg("registerTitle")}
+        </h1>
 
-        <div id="lastName-wrapper" className="mb-4">
-          <div>
-            <label htmlFor="lastName">Last name</label>
-            <div>
-              <input
-                type="text"
-                id="lastName"
-                name="lastName"
-                className="border rounded-sm w-full px-1"
-                defaultValue={register.formData.lastName ?? ""}
-              />
-            </div>
-          </div>
-        </div>
+        <Input
+          id="firstName"
+          type="text"
+          size="sm"
+          name="firstName"
+          label={msg("firstName")}
+          className="pb-4"
+          variant="underlined"
+          defaultValue={register.formData.firstName ?? ""}
+        />
 
-        <div id="email-wrapper" className="mb-4">
-          <div>
-            <label htmlFor="email">Email</label>
-            <div>
-              <input
-                type="text"
-                id="email"
-                name="email"
-                className="border rounded-sm w-full px-1"
-                defaultValue={register.formData.email ?? ""}
-                autoComplete="email"
-              />
-            </div>
-          </div>
-        </div>
+        <Input
+          id="lastName"
+          type="text"
+          size="sm"
+          name="lastName"
+          label={msg("lastName")}
+          className="pb-4"
+          variant="underlined"
+          defaultValue={register.formData.lastName ?? ""}
+        />
 
+        <Input
+          id="email"
+          type="text"
+          size="sm"
+          name="email"
+          label={msg("email")}
+          className="pb-4"
+          variant="underlined"
+          autoComplete="email"
+          defaultValue={register.formData.email ?? ""}
+        />
         {!realm.registrationEmailAsUsername && (
-          <div id="username-wrapper" className="mb-4">
-            <div>
-              <label htmlFor="username">Username</label>
-              <div>
-                <input
-                  type="text"
-                  id="username"
-                  name="username"
-                  className="border rounded-sm w-full px-1"
-                  defaultValue={register.formData.username ?? ""}
-                  autoComplete="username"
-                />
-              </div>
-            </div>
-          </div>
+          <Input
+            id="username"
+            type="text"
+            size="sm"
+            name="username"
+            label={msg("username")}
+            className="pb-4"
+            variant="underlined"
+            autoComplete="username"
+            defaultValue={register.formData.username ?? ""}
+          />
         )}
         {passwordRequired && (
           <>
-            <div id="password-wrapper" className="mb-4">
-              <div>
-                <label htmlFor="password">Password</label>
-                <div>
-                  <input
-                    type="password"
-                    id="password"
-                    name="password"
-                    className="border rounded-sm w-full px-1"
-                    autoComplete="new-password"
-                  />
-                </div>
-              </div>
-            </div>
-            <div id="password-confirm-wrapper" className="mb-4">
-              <div>
-                <label htmlFor="password-confirm">Confirm password</label>
-                <div>
-                  <input
-                    type="password"
-                    id="password-confirm"
-                    name="password-confirm"
-                    className="border rounded-sm w-full px-1"
-                  />
-                </div>
-              </div>
-            </div>
+            <Input
+              id="password"
+              type="password"
+              size="sm"
+              name="password"
+              label={msg("password")}
+              className="pb-4"
+              variant="underlined"
+              autoComplete="new-password"
+            />
+
+            <Input
+              id="password-confirm"
+              type="password"
+              size="sm"
+              name="password-confirm"
+              label={msg("passwordConfirm")}
+              className="pb-4"
+              variant="underlined"
+              autoComplete="new-password"
+            />
           </>
         )}
         {recaptchaRequired && (
@@ -142,24 +127,17 @@ export default function Register(
             </div>
           </div>
         )}
-        <div className={getClassName("kcFormGroupClass")}>
-          <div
-            id="kc-form-options"
-            className={getClassName("kcFormOptionsClass")}
-          >
-            <div className={getClassName("kcFormOptionsWrapperClass")}>
-              <span>
-                <a href={url.loginUrl}>{msg("backToLogin")}</a>
-              </span>
+        <div>
+          <div id="kc-form-options">
+            <div>
+              <Link href={url.loginUrl}>{msg("backToLogin")}</Link>
             </div>
           </div>
 
-          <div id="kc-form-buttons">
-            <input
-              type="submit"
-              className="border rounded-md bg-blue-600 text-white"
-              value={msgStr("doRegister")}
-            />
+          <div id="kc-form-buttons" className="flex justify-center pt-8">
+            <Button fullWidth type="submit" className="bg-blue-600 text-white">
+              {msgStr("doRegister")}
+            </Button>
           </div>
         </div>
       </form>

@@ -3,6 +3,7 @@ import { lazy, Suspense } from "react";
 import Fallback, { type PageProps } from "keycloakify/login";
 import type { KcContext } from "./kcContext";
 import { useI18n } from "./i18n";
+import LoginResetPassword from "./pages/LoginResetPassword";
 
 const Template = lazy(() => import("./Template"));
 const DefaultTemplate = lazy(() => import("keycloakify/login/Template"));
@@ -47,8 +48,9 @@ export default function KcApp(props: { kcContext: KcContext; }) {
             {(() => {
                 switch (kcContext.pageId) {
                     case "login.ftl": return <Login {...{ kcContext, i18n, Template, classes }} doUseDefaultCss={true} />;
-                    case "register.ftl": return <Register {...{ kcContext, i18n, Template, classes }} doUseDefaultCss={true} />;
+                    case "register.ftl": return <Register {...{ kcContext, i18n, Template, classes }} doUseDefaultCss={false} />;
                     case "register-user-profile.ftl": return <RegisterUserProfile {...{ kcContext, i18n, Template, classes }} doUseDefaultCss={true} />
+                    case "login-reset-password.ftl": return <LoginResetPassword {...{kcContext, i18n, Template, classes}} doUseDefaultCss={true} />
                     case "terms.ftl": return <Terms {...{ kcContext, i18n, Template, classes }} doUseDefaultCss={true} />;
                     case "my-extra-page-1.ftl": return <MyExtraPage1 {...{ kcContext, i18n, Template, classes }} doUseDefaultCss={true} />;
                     case "my-extra-page-2.ftl": return <MyExtraPage2 {...{ kcContext, i18n, Template, classes }} doUseDefaultCss={true} />;
